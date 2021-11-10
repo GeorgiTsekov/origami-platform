@@ -13,10 +13,46 @@ module.exports = {
         register: (req, res, next) => {
             const { username, password } = req.body;
             models.User.create({ username, password })
-                .then((createdUser) => res.send(createdUser))
-                .catch(next)
-        },
+                .then((createdUser) => {
+                    const token = utils.jwt.createToken({ id: createdUser._id });
+                    res.header("Authorization", token).send(createdUser);
+                })
+                .catch((err) => {
 
+                    console.log(err)
+                })
+        },
+        verifyLogin: (req, res, next) => {
+            const token = req.body.token || '';
+
+            Promise.all([
+                utils.jwt.verifyToken(token),
+                models.TokenBlacklist.findOne({ token })
+            ])
+                .then(([data, blacklistToken]) => {
+                    if (blacklistToken) { return Promise.reject(new Error('blacklisted token')) }
+
+                    models.User.findById(data.id)
+                        .then((user) => {
+                            return res.send({
+                                status: true,
+                                user
+                            })
+                        });
+                })
+                .catch(err => {
+                    if (!redirectAuthenticated) { next(); return; }
+
+                    if (['token expired', 'blacklisted token', 'jwt must be provided'].includes(err.message)) {
+                        res.status(401).send('UNAUTHORIZED!');
+                        return;
+                    }
+
+                    res.send({
+                        status: false
+                    })
+                })
+        },
         login: (req, res, next) => {
             const { username, password } = req.body;
             models.User.findOne({ username })
@@ -28,7 +64,7 @@ module.exports = {
                     }
 
                     const token = utils.jwt.createToken({ id: user._id });
-                    res.cookie(config.authCookieName, token).send(user);
+                    res.header("Authorization", token).send(user);
                 })
                 .catch(next);
         },
