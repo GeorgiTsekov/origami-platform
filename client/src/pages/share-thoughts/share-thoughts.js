@@ -14,7 +14,7 @@ const ShareThoughtsPage = () => {
           <textarea className={styles.textarea} placeholder="Publication..."></textarea>
         </div>
         <div>
-          <SubmitButton />
+          <SubmitButton title={"Share"} />
         </div>
       </div>
       <Origamis length={3}/>
