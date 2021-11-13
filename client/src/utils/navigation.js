@@ -11,7 +11,7 @@ const getNavigation = (userid) => {
         },
         {
             title: "Profile",
-            link: `/profile${userid}`
+            link: `/profile/${userid}`
         },
         {
             title: "Register",
