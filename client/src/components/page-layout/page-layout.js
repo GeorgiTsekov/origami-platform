@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './page-wrapper.module.css';
+import styles from './page-layout.module.css';
 import Header from '../header/header'
 import Aside from '../aside/aside'
 import Footer from '../footer/footer';
 
-const PageWrapper = (props) => {
+const PageLayout = (props) => {
     return (
         <div className={styles.app}>
             <Header />
@@ -19,4 +19,4 @@ const PageWrapper = (props) => {
     );
 }
 
-export default PageWrapper;
+export default PageLayout;

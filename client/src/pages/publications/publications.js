@@ -1,50 +1,15 @@
-import React, { Component } from "react";
-import styles from './publications.module.css';
-import PageWrapper from '../../components/page-wrapper/page-wrapper';
-import Origami from '../../components/origami/origami';
+import React from "react";
+import PageWrapper from '../../components/page-layout/page-layout';
 import Title from '../../components/title/title';
+import Origamis from "../../components/origamis/origamis";
 
-class Publications extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      origamis: []
-    }
-  }
-
-  getOrigamis = async () => {
-    const promise = await fetch('http://localhost:9999/api/origami');
-    const origamis = await promise.json();
-    this.setState({
-      origamis
-    })
-  }
-
-  renderOrigamis() {
-    const origamis = this.state.origamis;
-
-    return origamis.map((origami, index) => {
-      return (
-        <Origami key={origami._id} index={index} {...origami} />
-      )
-    })
-  }
-
-  componentDidMount() {
-    this.getOrigamis()
-  }
-
-  render() {
-    return (
-      <PageWrapper>
-        <Title title="Publications" />
-        <div className={styles["origamis-wrapper"]}>
-          {this.renderOrigamis()}
-        </div>
-      </PageWrapper>
-    )
-  }
+const Publications = () => {
+  return (
+    <PageWrapper>
+      <Title title="Publications" />
+      <Origamis />
+    </PageWrapper>
+  )
 }
 
 export default Publications;
