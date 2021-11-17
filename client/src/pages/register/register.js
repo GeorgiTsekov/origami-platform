@@ -10,7 +10,7 @@ class RegisterPage extends Component {
         super(props)
 
         this.state = {
-            email: "",
+            username: "",
             password: "",
             rePassword: ""
         }
@@ -24,35 +24,33 @@ class RegisterPage extends Component {
     }
 
     render() {
-        const { email, password, rePassword } = this.state;
+        const { username, password, rePassword } = this.state;
         return (
             <PageLayout>
                 <form className={styles.container}>
                     <Title title="Register" />
-                    <form>
-                        <Input
-                            label="Email"
-                            id="email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => this.onChange(e, "email")}
-                        />
-                        <Input
-                            label="Password"
-                            id="password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => this.onChange(e, "password")}
-                        />
-                        <Input
-                            label="Re-password"
-                            id="rePassword"
-                            type="password"
-                            value={rePassword}
-                            onChange={(e) => this.onChange(e, "rePassword")}
-                        />
-                        <SubmitButton title="Register" />
-                    </form>
+                    <Input
+                        label="Username"
+                        id="username"
+                        type="username"
+                        value={username}
+                        onChange={(e) => this.onChange(e, "username")}
+                    />
+                    <Input
+                        label="Password"
+                        id="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => this.onChange(e, "password")}
+                    />
+                    <Input
+                        label="Re-password"
+                        id="rePassword"
+                        type="password"
+                        value={rePassword}
+                        onChange={(e) => this.onChange(e, "rePassword")}
+                    />
+                    <SubmitButton title="Register" />
                 </form>
             </PageLayout>
         )
