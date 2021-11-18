@@ -4,6 +4,7 @@ import Input from '../../components/input/input';
 import PageLayout from '../../components/page-layout/page-layout';
 import Title from '../../components/title/title';
 import styles from './register.module.css';
+import authenticate from '../../utils/authenticate';
 
 class RegisterPage extends Component {
     constructor(props) {
@@ -16,39 +17,55 @@ class RegisterPage extends Component {
         }
     }
 
-    onChange = (event, type) => {
+    handleChange = (event, type) => {
         const newState = {};
         newState[type] = event.target.value;
 
         this.setState(newState);
     }
 
+    handleSubmit = async (event) => {
+        event.preventDefault();
+        const { username, password } = this.state;
+
+        await authenticate(
+            'http://localhost:9999/api/user/register',
+            { username, password },
+            () => {
+                console.log('Yeeey');
+                this.props.history.push('/');
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
+
     render() {
         const { username, password, rePassword } = this.state;
         return (
             <PageLayout>
-                <form className={styles.container}>
+                <form className={styles.container} onSubmit={this.handleSubmit}>
                     <Title title="Register" />
                     <Input
                         label="Username"
                         id="username"
-                        type="username"
                         value={username}
-                        onChange={(e) => this.onChange(e, "username")}
+                        onChange={(e) => this.handleChange(e, "username")}
                     />
                     <Input
                         label="Password"
                         id="password"
                         type="password"
                         value={password}
-                        onChange={(e) => this.onChange(e, "password")}
+                        onChange={(e) => this.handleChange(e, "password")}
                     />
                     <Input
                         label="Re-password"
                         id="rePassword"
                         type="password"
                         value={rePassword}
-                        onChange={(e) => this.onChange(e, "rePassword")}
+                        onChange={(e) => this.handleChange(e, "rePassword")}
                     />
                     <SubmitButton title="Register" />
                 </form>

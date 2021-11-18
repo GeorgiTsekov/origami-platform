@@ -4,6 +4,7 @@ import Input from '../../components/input/input';
 import PageLayout from '../../components/page-layout/page-layout';
 import Title from '../../components/title/title';
 import styles from './login.module.css';
+import authenticate from '../../utils/authenticate';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -26,28 +27,17 @@ class LoginPage extends Component {
         event.preventDefault();
         const { username, password } = this.state;
 
-        try {
-            const promise = await fetch('http://localhost:9999/api/user/login', {
-                method: 'POST',
-                body: JSON.stringify({
-                    username,
-                    password
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            const authToken = promise.headers.get('Authorization');
-            document.cookie = `x-auth-token=${authToken}`;
-            const response = await promise.json();
-
-            if (response.username && authToken) {
+        await authenticate(
+            'http://localhost:9999/api/user/login',
+            { username, password },
+            () => {
+                console.log('Yeeey');
                 this.props.history.push('/');
+            },
+            (error) => {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
-        }
+        )
     }
 
     render() {
