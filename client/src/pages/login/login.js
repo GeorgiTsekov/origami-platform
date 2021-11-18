@@ -5,6 +5,7 @@ import PageLayout from '../../components/page-layout/page-layout';
 import Title from '../../components/title/title';
 import styles from './login.module.css';
 import authenticate from '../../utils/authenticate';
+import UserContext from '../../Context';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -15,6 +16,8 @@ class LoginPage extends Component {
             password: ""
         }
     }
+
+    static contextType = UserContext;
 
     handleChange = (event, type) => {
         const newState = {};
@@ -30,8 +33,8 @@ class LoginPage extends Component {
         await authenticate(
             'http://localhost:9999/api/user/login',
             { username, password },
-            () => {
-                console.log('Yeeey');
+            (user) => {
+                this.context.logIn(user);
                 this.props.history.push('/');
             },
             (error) => {
