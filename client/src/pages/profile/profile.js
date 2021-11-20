@@ -1,68 +1,59 @@
-import React, { Component } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
+import { useHistory, useParams } from 'react-router';
 import PageLayout from "../../components/page-layout/page-layout";
 import Origamis from "../../components/origamis/origamis";
 import UserContext from "../../Context";
 
-class ProfilePage extends Component {
-    constructor(props) {
-        super(props)
+const ProfilePage = () => {
 
-        this.state = {
-            username: null,
-            posts: null
-        }
+    const [username, setUsername] = useState(null);
+    const [posts, setposts] = useState(null);
+    const history = useHistory();
+    const params = useParams();
+    const context = useContext(UserContext);
 
-    }
+    const getData = useCallback(async () => {
+        const id = params.userid;
 
-    static contextType = UserContext;
-
-    componentDidMount() {
-        this.getUser(this.props.match.params.userid);
-    }
-
-    getUser = async (id) => {
         const response = await fetch(`http://localhost:9999/api/user?id=${id}`);
         if (!response.ok) {
-            this.props.history.push('/error');
+            history.push('/error');
+        } else {
+            const user = await response.json();
+            setUsername(user.username);
+            setposts(user.posts && user.posts.length);
         }
+    }, [params.userid, history])
 
-        const user = await response.json();
+    useEffect(() => {
+        getData();
+    }, [getData]);
 
-        this.setState({
-            username: user.username,
-            posts: user.posts && user.posts.length
-        });
-    }
-
-    logOut = () => {
+    const logOut = () => {
         document.cookie = 'x-auth-token='
-        this.context.logOut();
-        this.props.history.push('/')
+        context.logOut();
+        history.push('/')
     }
 
-    render() {
-        const { username, posts } = this.state;
-
-        if (!username) {
-            return (
-                <PageLayout>
-                    <div>Loading...</div>
-                </PageLayout>
-            )
-        }
-
+    if (!username) {
         return (
             <PageLayout>
-                <div>
-                    <p>User: {username}</p>
-                    <p>Posts: {posts}</p>
-
-                    <button onClick={this.logOut}>Logout</button>
-                </div>
-                <Origamis length={3} />
+                <div>Loading...</div>
             </PageLayout>
         )
     }
+
+    return (
+        <PageLayout>
+            <div>
+                <p>User: {username}</p>
+                <p>Posts: {posts}</p>
+
+                <button onClick={logOut}>Logout</button>
+            </div>
+            <Origamis length={3} />
+        </PageLayout>
+    )
 }
 
 export default ProfilePage;

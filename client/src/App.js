@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserContext from "./Context";
-
-function getCookie(name) {
-    const cookieValue = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    return cookieValue ? cookieValue[2] : null;
-}
+import getCookie from './utils/cookie';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
