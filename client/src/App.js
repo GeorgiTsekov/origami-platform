@@ -25,6 +25,8 @@ const App = (props) => {
 
         if (!token) {
             logOut();
+            setLoading(false);
+            
             return;
         }
 
