@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Component shoult render authenticated routes 1`] = `
+<header
+  className="navigation"
+>
+  <img
+    alt=""
+    className="logo"
+    src="white-origami-bird.png"
+  />
+  <li
+    className="header-list-item"
+  >
+    <a
+      className="header-link"
+      href="/"
+      onClick={[Function]}
+    >
+      Publications
+    </a>
+  </li>
+  <li
+    className="header-list-item"
+  >
+    <a
+      className="header-link"
+      href="/share"
+      onClick={[Function]}
+    >
+      Share your throughts
+    </a>
+  </li>
+  <li
+    className="header-list-item"
+  >
+    <a
+      className="header-link"
+      href="/profile/123"
+      onClick={[Function]}
+    >
+      Profile
+    </a>
+  </li>
+</header>
+`;
+
+exports[`Header Component shout render authenticated routes 1`] = `
+<header
+  className="navigation"
+>
+  <img
+    alt=""
+    className="logo"
+    src="white-origami-bird.png"
+  />
+  <li
+    className="header-list-item"
+  >
+    <a
+      className="header-link"
+      href="/"
+      onClick={[Function]}
+    >
+      Publications
+    </a>
+  </li>
+  <li
+    className="header-list-item"
+  >
+    <a
+      className="header-link"
+      href="/share"
+      onClick={[Function]}
+    >
+      Share your throughts
+    </a>
+  </li>
+  <li
+    className="header-list-item"
+  >
+    <a
+      className="header-link"
+      href="/profile/123"
+      onClick={[Function]}
+    >
+      Profile
+    </a>
+  </li>
+</header>
+`;
