@@ -5,7 +5,6 @@ import getOrigami from "../../utils/origami";
 
 const Origamis = (props) => {
     const [origamis, setOrigamis] = useState([]);
-
     const getOrigamis = useCallback(async () => {
         const origamis = await getOrigami(props.length);
         setOrigamis(origamis);

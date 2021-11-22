@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import React, { useContext } from "react";
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import Publications from './pages/publications/publications';
 import RegisterPage from "./pages/register/register";
@@ -7,19 +7,31 @@ import ShareThoughtsPage from "./pages/share-thoughts/share-thoughts";
 import LoginPage from "./pages/login/login";
 import ProfilePage from "./pages/profile/profile";
 import ErrorPage from "./pages/error/error";
+import UserContext from "./Context";
 
 const Navigation = () => {
+    const context = useContext(UserContext);
+    const loggedIn = context.user ? context.user.loggedIn : false;
     return (
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" component={Publications} />
-                <Route path="/share" component={ShareThoughtsPage} />
-                <Route path="/register" component={RegisterPage} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/profile/:userid" component={ProfilePage} />
+
+                <Route path="/share" >
+                    {loggedIn ? (<ShareThoughtsPage />) : (<Redirect to="/login" />)}
+                </Route>
+                <Route path="/register">
+                    {loggedIn ? (<Redirect to="/" />) : (<RegisterPage />)}
+                </Route>
+                <Route path="/login">
+                    {loggedIn ? (<Redirect to="/" />) : (<LoginPage />)}
+                </Route>
+                <Route path="/profile/:userid">
+                    {loggedIn ? (<ProfilePage />) : (<Redirect to="/login" />)}
+                </Route>
                 <Route component={ErrorPage} />
             </Switch>
-        </BrowserRouter>
+        </BrowserRouter >
     )
 }
 
