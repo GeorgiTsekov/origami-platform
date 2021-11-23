@@ -45,7 +45,7 @@ exports[`Header Component shoult render authenticated routes 1`] = `
 </header>
 `;
 
-exports[`Header Component shout render authenticated routes 1`] = `
+exports[`Header Component shout render non-authenticated routes 1`] = `
 <header
   className="navigation"
 >
@@ -70,10 +70,10 @@ exports[`Header Component shout render authenticated routes 1`] = `
   >
     <a
       className="header-link"
-      href="/share"
+      href="/register"
       onClick={[Function]}
     >
-      Share your throughts
+      Register
     </a>
   </li>
   <li
@@ -81,10 +81,10 @@ exports[`Header Component shout render authenticated routes 1`] = `
   >
     <a
       className="header-link"
-      href="/profile/123"
+      href="/login"
       onClick={[Function]}
     >
-      Profile
+      Login
     </a>
   </li>
 </header>

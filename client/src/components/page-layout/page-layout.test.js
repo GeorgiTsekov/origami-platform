@@ -1,10 +1,14 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Header from './components/header/header';
-import TestingEnvironment from './test-utils/router';
+import TestingEnvironment from '../../test-utils/router';
+import PageLayout from './page-layout';
 
-describe('Header Component', () => {
-    it('shoult render authenticated routes', () => {
+jest.mock('../header/header', () => 'Header');
+jest.mock('../aside/aside', () => 'Aside');
+jest.mock('../footer/footer', () => 'Footer');
+
+describe('PageLayout Component', () => {
+    it('shoult render pagelayout component', () => {
         const tree = renderer.create(
             <TestingEnvironment value={{
                 user: {
@@ -12,13 +16,10 @@ describe('Header Component', () => {
                     id: '123'
                 }
             }}>
-                <Header />
+                <PageLayout />
             </TestingEnvironment>
 
         ).toJSON();
         expect(tree).toMatchSnapshot();
     });
-    // it('shout render non-authenticated routes', () => {
-
-    // });
-})
+});
