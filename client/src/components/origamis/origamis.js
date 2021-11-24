@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styles from './origamis.module.css';
 import Origami from '../origami/origami';
 import getOrigami from "../../utils/origami";
@@ -10,14 +10,14 @@ const Origamis = (props) => {
         setOrigamis(origamis);
     }, [props.length]);
 
-    const renderOrigamis = () => {
+    const renderOrigamis = useMemo(() => {
 
         return origamis.map((origami, index) => {
             return (
                 <Origami key={origami._id} index={index} {...origami} />
             )
         })
-    }
+    }, [origamis])
 
     useEffect(() => {
         getOrigamis();
@@ -25,7 +25,7 @@ const Origamis = (props) => {
 
     return (
         <div className={styles["origamis-wrapper"]}>
-            {renderOrigamis()}
+            {renderOrigamis}
         </div>
     )
 }
